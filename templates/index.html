@@ -83,27 +83,28 @@
 
 <script>
 
-function load_car_models(company_id, car_model_id) {
-  var company = document.getElementById(company_id);
-  var car_model = document.getElementById(car_model_id);
-  console.log(company.value);
-  car_model.value = "";
-  car_model.innerHTML = "";
+    function load_car_models(company_id,car_model_id)
+    {
+        var company=document.getElementById(company_id);
+        var car_model= document.getElementById(car_model_id);
+        console.log(company.value);
+        car_model.value="";
+        car_model.innerHTML="";
+        {% for company in companies %}
+            if( company.value == "{{ company }}")
+            {
+                {% for model in car_models %}
+                    {% if company in model %}
 
-  for (var i = 0; i < companies.length; i++) {
-    if (company.value == companies[i]) {
-      for (var j = 0; j < car_models.length; j++) {
-        if (companies[i] == car_models[j][0]) {
-          var newOption = document.createElement("option");
-          newOption.value = car_models[j][1];
-          newOption.innerHTML = car_models[j][1];
-          car_model.options.add(newOption);
-        }
-      }
+                        var newOption= document.createElement("option");
+                        newOption.value="{{ model }}";
+                        newOption.innerHTML="{{ model }}";
+                        car_model.options.add(newOption);
+                    {% endif %}
+                {% endfor %}
+            }
+        {% endfor %}
     }
-  }
-}
-
 
     function form_handler(event) {
         event.preventDefault(); // Don't submit the form normally

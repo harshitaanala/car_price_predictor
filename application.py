@@ -7,7 +7,6 @@ import numpy as np
 
 app=Flask(__name__)
 cors=CORS(app)
-#model=pickle.load(open(r'C:\Users\harsh\OneDrive\Desktop\ml mini project\car price predictor\LinearRegressionModel.pkl','rb'))
 with open('LinearRegressionModel.pkl', 'rb') as file:
     model = pickle.load(file)
 car=pd.read_csv('Cleaned_Car_data.csv')
@@ -34,8 +33,7 @@ def predict():
     fuel_type=request.form.get('fuel_type')
     driven=request.form.get('kilo_driven')
 
-    prediction=model.predict(pd.DataFrame(columns=['name', 'company', 'year', 'kms_driven', 'fuel_type'],
-                              data=np.array([car_model,company,year,driven,fuel_type]).reshape(1, 5)))
+    prediction=model.predict(pd.DataFrame(columns=['name', 'company', 'year', 'kms_driven', 'fuel_type'],data=np.array([car_model,company,year,driven,fuel_type]).reshape(1, 5)))
     print(prediction)
 
     return str(np.round(prediction[0],2))
